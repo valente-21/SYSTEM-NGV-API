@@ -1,12 +1,35 @@
+import {userRepository, IUser} from '../../repositories/user'
 
-interface IUser {
-    name: string
-    lastName: string
-    password: string
-    phone: string
-    email: string
+export default async function userCreate(userData: IUser) {
+    const {
+        name,
+        lastName,
+        password,
+        email,
+        phone
+
+    } = userData
+
+    if (
+        !name ||
+        !lastName ||
+        !password ||
+        !email ||
+        !phone
+    ) {
+        throw new Error('Incomplete data')
+    }
+
+    const resultValidatePassword = validatePassword(password)
+
+    if (!resultValidatePassword) throw new Error('Invalid password')
+    const user = await userRepository.create(userData)
+    return  user
 }
 
-export default async function userCreate(user: IUser) {
-    return { status: 200, data: user }
+
+function validatePassword(psw: string) {
+    const regexI = /[a-z]\d/.test(psw)
+    const regexII = psw.includes(' ')
+    return regexI && !regexII ? true : false
 }
