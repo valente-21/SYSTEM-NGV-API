@@ -3,9 +3,9 @@ import { addressList } from '../../modules/address/addressList'
 
 export async function addressListCtrl(req: Request, res: Response) {
     try {
-        const {status, data} = await addressList()
-        return res.status(status).json(data)
+        const address = await addressList()
+        return res.status(200).json(address)
     } catch (error) {
-        return res.status(400).json(error)
+        return res.status(400).json({ error: 'Internal server error' })
     }
 }

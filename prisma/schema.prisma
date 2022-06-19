@@ -10,29 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model User {
   id       Int       @id @default(autoincrement())
-  name     String
+  name     String    @db.Citext
   lastName String
+  nick     String
   password String
   phone    String
   email    String    @unique
-  address  address[]
+  address  Address[]
 
-  @@map("Users")
+  @@map("users")
 }
 
-model address {
+model Address {
   id         Int     @id @default(autoincrement())
   country    String
   state      String
   city       String
+  district   String
   road       String
   number     String
   complement String?
   zipCode    String
-  user       user    @relation(fields: [userId], references: [id])
+  user       User    @relation(fields: [userId], references: [id])
   userId     Int
 
-  @@map("Address")
+  @@map("address")
 }

@@ -1,3 +1,5 @@
+import {addressRepository} from '../../repositories/address'
 export async function addressList(){
-    return {status: 200, data:{message: 'address list'}}
+    const addressList = await addressRepository.list()
+    return addressList
 }

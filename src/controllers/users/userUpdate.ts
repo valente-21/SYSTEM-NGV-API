@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import userUpade from "../../modules/users/userUpdate";
+import userUpdate from "../../modules/users/userUpdate";
 
 export async function userUpdateCtrl(req: Request, res: Response) {
     try {
-        const { status, data } = await userUpade()
+        const user = await userUpdate(Number(req.params.id), req.body)
 
-        return res.status(status).json(data)
+        return res.status(200).json(user)
 
     } catch (error) {
-        return res.status(400).json({ data: error })
+        return res.status(400).json({ data: error })//
 
     }
 }

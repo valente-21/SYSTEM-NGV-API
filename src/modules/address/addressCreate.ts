@@ -1,16 +1,4 @@
 
-
-// interface IAddress {
-//     userId: number
-//     country: string
-//     state: string
-//     city: string
-//     road: string
-//     number: string
-//     Complement?: string
-//     zipCode: string
-// }
-
 import { addressRepository, IAddress } from "../../repositories/address"
 
 export async function addressCreate(addressData: IAddress) {
@@ -19,9 +7,11 @@ export async function addressCreate(addressData: IAddress) {
         country,
         state,
         city,
+        district,
         road,
         number,
         zipCode,
+        complement
 
     } = addressData
 
@@ -30,6 +20,7 @@ export async function addressCreate(addressData: IAddress) {
         !country ||
         !state ||
         !city ||
+        !district||
         !road ||
         !number ||
         !zipCode
@@ -37,6 +28,16 @@ export async function addressCreate(addressData: IAddress) {
     ) {
         throw new Error('Incomplete data')
     }
-    const address = await addressRepository.create(addressData)
+    const address = await addressRepository.create({
+            userId,
+            country,
+            state,
+            city,
+            district,
+            road,
+            number,
+            complement,
+            zipCode,
+    })
     return address
 }

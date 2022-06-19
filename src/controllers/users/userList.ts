@@ -3,12 +3,9 @@ import userList from "../../modules/users/userList";
 
 export async function userListCtrl(req: Request, res: Response) {
     try {
-        const { status, data } = await userList()
-
-        return res.status(status).json(data)
-
+        const users = await userList()
+        return res.status(200).json(users)
     } catch (error) {
-        return res.status(400).json({ data: error })
-
+        return res.status(400).json({ error: 'Internal server error' })
     }
 }

@@ -23,7 +23,14 @@ export default async function userCreate(userData: IUser) {
     const resultValidatePassword = validatePassword(password)
 
     if (!resultValidatePassword) throw new Error('Invalid password')
-    const user = await userRepository.create(userData)
+    const user = await userRepository.create({
+        name,
+        lastName,
+        password,
+        email,
+        phone
+
+    }) // a desestruturação do userData garante que somente os dados esperados sejam enviados ao banco.
     return  user
 }
 
